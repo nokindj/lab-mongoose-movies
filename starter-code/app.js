@@ -9,9 +9,24 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
+// MTO IMPORTANTE
+// 1. Não esquecer de inserir o mesmo nome do projecto - const DB_NAME = 'celebrities-movies' na seeds.js 
+// e colocar o mesmo nome na app.js - .connect("mongodb://localhost/celebrities-movies", {useNewUrlParser: true})
+// 2. Não esquecer de inserir o comando - node bin/seeds.js no terminal 
+// para aparecer no mongoDB a database
+// 3. Não esquecer de inserir module.exports = app; no fim das paginas route etc.
+// 4. Não esquecer de inserir as novas pastas de routes na app.js. 
+// Por exemplo: const celebrity = require("./routes/celebrities")
+// app.use("/", celebrity)
+// Ou seja para a pasta routes/celebrities preciso de inserir o require na app.js
+// 5. Verificar sempre as / (barras) das paths das routes pq acontece muito ser esse o problema
+// 6. Verificar sempre que os route.get e route.post que não estiverem definidos, 
+// ou seja os que forem à procura por ex. de um id têm sempre que ficar por baixo da pagina de codigo. 
+// os que tenham o path do url definido, (ex: http://localhost:3000/celebrities/new) ficam em cima na página.
+
 
 mongoose
-  .connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
+  .connect("mongodb://localhost/celebrities-movies", {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -54,5 +69,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 const index = require('./routes/index');
 app.use('/', index);
 
+const celebrity = require("./routes/celebrities")
+app.use("/", celebrity)
 
 module.exports = app;
